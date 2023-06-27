@@ -17,8 +17,8 @@ PureList is a lightweight PHP script designed to effortlessly list the contents 
 
 # Customization
 
-**Authentication**: Set your desired username and password in the USERNAME and PASSWORD constants, respectively.
-**Exclusion List**: Modify the EXCLUDE_LIST constant to specify files that should be excluded from the listing.
+- **Authentication**: Set your desired username and password in the USERNAME and PASSWORD constants, respectively.
+- **Exclusion List**: Modify the EXCLUDE_LIST constant to specify files that should be excluded from the listing.
 
 # Compatibility
 
