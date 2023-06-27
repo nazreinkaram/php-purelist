@@ -1,12 +1,11 @@
 <?php
 
 // Set credentials to prevent public access
-define('USERNAME', 'xxxxxxxxx');
-define('PASSWORD', 'xxxxxxxxx');
+define('USERNAME', 'xxxx');
+define('PASSWORD', 'xxxx');
 
 // Set list of files which should be exluded from list
 define('EXCLUDE_LIST', ['./index.php', 'README.md']);
-define('EXCLUDE_LIST', ['./index.php', '']);
 
 // No changes needed below
 
