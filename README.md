@@ -15,9 +15,14 @@ PureList is a lightweight PHP script designed to effortlessly list the contents 
 3. Access the directory via a web browser.
 4. Voila! The script will automatically generate a clean and minimalistic listing of the directory's contents.
 
+# Customization
+
+**Authentication**: Set your desired username and password in the USERNAME and PASSWORD constants, respectively.
+**Exclusion List**: Modify the EXCLUDE_LIST constant to specify files that should be excluded from the listing.
+
 # Compatibility
 
-PureList is compatible with most PHP environments and web servers. It may work PHP version 5.4 but or PHP version 7 or higher is recommended.
+PureList is compatible with most PHP environments and web servers. It may work with PHP version 5.4 but version 7 or higher is recommended.
 
 # Screenshot
 
