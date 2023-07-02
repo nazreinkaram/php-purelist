@@ -4,7 +4,7 @@
 define('USERNAME', 'xxxx');
 define('PASSWORD', 'xxxx');
 
-// Set list of files which should be exluded from list
+// Set list of files which should be excluded from list
 define('EXCLUDE_LIST', ['./index.php', 'README.md']);
 
 ############################################
@@ -50,7 +50,7 @@ function print_directory_tree($tree)
                     <p class="size">' . $directory['items_count'] . ' items</p>
                 </div>
             </div>
-            <div class="childs">
+            <div class="childs" data-parent-etag="' . $directory['etag'] . '">
         ';
 
         if ($directory['items_count'] > 0) {
@@ -112,7 +112,8 @@ function get_directory_tree($directory)
                 // 
                 'name' => $child,
                 'childs' => $directory_childs,
-                'items_count' => count($directory_childs['directories']) + count($directory_childs['files'])
+                'items_count' => count($directory_childs['directories']) + count($directory_childs['files']),
+                'etag' => md5($child_path)
             ];
 
             continue;
@@ -206,7 +207,7 @@ function send_json($data)
         }
 
         .self {
-            border-bottom: 1rem solid var(--border-color);
+            /* border-bottom: 1rem solid var(--border-color); */
 
             padding: 10rem 20rem;
 
@@ -215,6 +216,9 @@ function send_json($data)
 
         }
 
+        .self:hover {
+            background-color: #f5f5f5;
+        }
 
         .icon {
             width: var(--icon-size);
@@ -259,13 +263,8 @@ function send_json($data)
             height: 0;
 
             margin-left: 40rem;
-            padding: 0 20rem;
 
             overflow: hidden;
-        }
-
-        .childs.expanded {
-            height: auto;
         }
 
         @media screen and (max-width: 768px) {
@@ -279,7 +278,7 @@ function send_json($data)
 
             .childs {
                 margin-left: 30rem;
-                padding: 0 15rem;
+
             }
 
         }
@@ -303,7 +302,6 @@ function send_json($data)
 
             .childs {
                 margin-left: 20rem;
-                padding: 0 10rem;
             }
 
         }
@@ -327,7 +325,6 @@ function send_json($data)
 
             .childs {
                 margin-left: 10rem;
-                padding: 0 5rem;
             }
         }
     </style>
@@ -335,6 +332,10 @@ function send_json($data)
     <script>
         const init = () => {
             // 
+            // Restore state from local storage
+            restoreState();
+
+            // Add event listeners to all directories
             document.querySelectorAll('.directory > .self').forEach(element => {
                 element.addEventListener('click', toggleChilds);
             });
@@ -354,7 +355,7 @@ function send_json($data)
             };
             // 
             // Set height of childs element to target height
-            childsElement.style.height = heights[1];
+            setHeight(childsElement, heights[1]);
 
             // We will now adjust height of all container elements
             let container = childsElement;
@@ -367,7 +368,7 @@ function send_json($data)
                     break;
                 }
 
-                container.style.height = 'auto';
+                setHeight(container, 'auto');
             }
 
             // Animate
@@ -378,6 +379,42 @@ function send_json($data)
                 easing: 'ease-in-out',
             });
 
+            // Get element in view
+            childsElement.scrollIntoView({
+                behavior: 'smooth',
+            });
+
+        }
+
+        const setHeight = (element, height) => {
+            //
+            // Set height of element
+            element.style.height = height;
+
+            // Get existing state from local storage
+            let state = localStorage.getItem('state') || '{}';
+            state = JSON.parse(state);
+
+            // Set height of element in state
+            state[element.dataset.parentEtag] = height;
+            localStorage.setItem('state', JSON.stringify(state));
+        }
+
+        const restoreState = () => {
+            //
+            // Get existing state from local storage
+            let state = localStorage.getItem('state') || '{}';
+            state = JSON.parse(state);
+
+            // Set height of element in state
+            for (const parentEtag in state) {
+                //
+                const element = document.querySelector(`[data-parent-etag="${parentEtag}"]`);
+
+                if (element !== null) {
+                    setHeight(element, state[parentEtag]);
+                }
+            }
         }
     </script>
 
