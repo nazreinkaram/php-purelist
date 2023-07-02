@@ -7,7 +7,7 @@ define('PASSWORD', 'xxxx');
 // Set list of files which should be exluded from list
 define('EXCLUDE_LIST', ['./index.php', 'README.md']);
 
-// ############################################
+############################################
 
 // No changes needed below
 
