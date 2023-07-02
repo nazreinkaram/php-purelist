@@ -5,8 +5,9 @@ PureList is a lightweight PHP script designed to effortlessly list the contents 
 # Features
 
 - **Clean and Minimalistic Design**: The script provides a clutter-free interface, allowing your directory structure to take center stage.
-- **Easy Installation**: Simply place the `index.php` file in the desired directory, and it will work.
 - **Effortless Navigation:** Quickly browse through directories and access files with just a few clicks.
+- **State Persistence**: The script remembers the user's last visited directory and file selections, allowing them to resume their browsing session from where they left off.
+- **Easy Installation**: Simply place the `index.php` file in the desired directory, and it will work.
 
 # Usage
 
