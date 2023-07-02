@@ -12,9 +12,10 @@ PureList is a lightweight PHP script designed to effortlessly list the contents 
 # Usage
 
 1. Download the index.php file from the repository.
-2. Copy the index.php file to the directory you want to list.
-3. Access the directory via a web browser.
-4. Voila! The script will automatically generate a clean and minimalistic listing of the directory's contents.
+2. Copy the `index.php` file to the directory you want to list.
+3. Edit `username` and `password` at the top of the script.
+4. Access the directory via a web browser.
+5. Voila! The script will automatically generate a clean and minimalistic listing of the directory's contents.
 
 # Customization
 
