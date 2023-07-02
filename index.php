@@ -7,6 +7,9 @@ define('PASSWORD', 'xxxx');
 // Set list of files which should be excluded from list
 define('EXCLUDE_LIST', ['./index.php', 'README.md']);
 
+// Title of webpage
+define('PAGE_TITLE', 'qBittorrent Downloads');
+
 ############################################
 
 // No changes needed below
@@ -176,7 +179,7 @@ function send_json($data)
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>qBittorrent Downloads</title>
+    <title><?= PAGE_TITLE ?></title>
 
     <style>
         :root {
@@ -336,6 +339,8 @@ function send_json($data)
             restoreState();
 
             // Add event listeners to all directories
+            window.addEventListener('resize', reAdjustHeights);
+
             document.querySelectorAll('.directory > .self').forEach(element => {
                 element.addEventListener('click', toggleChilds);
             });
@@ -379,11 +384,11 @@ function send_json($data)
                 easing: 'ease-in-out',
             });
 
-            // Get element in view
+            // Get parent in view
             if (heights[0] === 0) {
                 //  
-                childsElement.scrollIntoView({
-                    behavior: 'smooth',
+                childsElement.parentNode.scrollIntoView({
+                    behavior: "smooth",
                 });
             }
 
@@ -401,6 +406,16 @@ function send_json($data)
             // Set height of element in state
             state[element.dataset.parentEtag] = height;
             localStorage.setItem('state', JSON.stringify(state));
+        }
+
+        const reAdjustHeights = () => {
+            //
+            document.querySelectorAll('.childs').forEach(element => {
+                //
+                if (element.clientHeight !== 0) {
+                    setHeight(element, 'auto');
+                }
+            });
         }
 
         const restoreState = () => {
