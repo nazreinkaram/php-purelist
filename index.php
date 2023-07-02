@@ -7,6 +7,8 @@ define('PASSWORD', 'xxxx');
 // Set list of files which should be exluded from list
 define('EXCLUDE_LIST', ['./index.php', 'README.md']);
 
+// ############################################
+
 // No changes needed below
 
 // Authenticate before accessing the page
@@ -39,7 +41,7 @@ function print_directory_tree($tree)
     foreach ($tree['directories'] as $directory) {
         // 
         $html .= '<div class="item directory">
-            <div class="self" onclick="toggleDirectory(this)">
+            <div class="self">
                 <div class="icon">
                     ' . print_folder_svg() . '
                 </div>
@@ -48,7 +50,7 @@ function print_directory_tree($tree)
                     <p class="size">' . $directory['items_count'] . ' items</p>
                 </div>
             </div>
-            <div class="childs collapsed">
+            <div class="childs">
         ';
 
         if ($directory['items_count'] > 0) {
@@ -262,6 +264,10 @@ function send_json($data)
             overflow: hidden;
         }
 
+        .childs.expanded {
+            height: auto;
+        }
+
         @media screen and (max-width: 768px) {
             :root {
                 --icon-size: 50rem;
@@ -328,21 +334,50 @@ function send_json($data)
 
     <script>
         const init = () => {
-
+            // 
+            document.querySelectorAll('.directory > .self').forEach(element => {
+                element.addEventListener('click', toggleChilds);
+            });
         }
 
-        const toggleDirectory = (element) => {
+        const toggleChilds = (event) => {
             //
-            const childsElement = element.nextElementSibling;
-            const heights = [0, childsElement.scrollHeight + 'rem']
+            // Childs element, which contain all items in directory
+            const childsElement = event.target.closest('.directory').querySelector('.childs');
 
+            // Intial and target heights of childs element, in expanded/collapsed state
+            let heights = [0, childsElement.scrollHeight + 'px']
+            // 
+            // If childs element is expanded, reverse heights
+            if (childsElement.clientHeight !== 0) {
+                heights = heights.reverse()
+            };
+            // 
+            // Set height of childs element to target height
+            childsElement.style.height = heights[1];
+
+            // We will now adjust height of all container elements
+            let container = childsElement;
+            // 
+            while (true) {
+                //
+                container = container.closest('.directory').closest('.childs');
+
+                if (container === null) {
+                    break;
+                }
+
+                container.style.height = 'auto';
+            }
+
+            // Animate
             childsElement.animate({
-                height: childsElement.clientHeight === 0 ? heights : heights.reverse()
+                height: heights,
             }, {
-                duration: 300,
+                duration: 200,
                 easing: 'ease-in-out',
-                fill: 'forwards'
             });
+
         }
     </script>
 
