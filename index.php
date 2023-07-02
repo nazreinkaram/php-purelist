@@ -15,10 +15,10 @@ define('PAGE_TITLE', 'qBittorrent Downloads');
 // No changes needed below
 
 // Authenticate before accessing the page
-authenicate();
+authenticate();
 
 // Functions
-function authenicate()
+function authenticate()
 {
     //
     if (
