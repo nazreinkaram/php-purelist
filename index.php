@@ -380,9 +380,12 @@ function send_json($data)
             });
 
             // Get element in view
-            childsElement.scrollIntoView({
-                behavior: 'smooth',
-            });
+            if (heights[0] === 0) {
+                //  
+                childsElement.scrollIntoView({
+                    behavior: 'smooth',
+                });
+            }
 
         }
 
